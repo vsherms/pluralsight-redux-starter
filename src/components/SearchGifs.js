@@ -29,7 +29,13 @@ class SearchGifs extends React.Component {
   handleNewGif(event) {
     event.preventDefault();
     this.props.addNewImage(this.state);
+    this.props.loadGifsFromServer(this.state);
+    this.setState({name: ''});
+    this.setState({url: ''});
+    this.setState({description: ''});
   }
+
+
 
   render() {
     return (
@@ -37,7 +43,7 @@ class SearchGifs extends React.Component {
           <legend>Add New Gif</legend>
 
           <div className="form-group">
-            <input onChange={this.handleNameChange} value={this.state.name} type="text" className="form-control" id="keyword" placeholder="keyword"/>
+            <input onChange={this.handleNameChange} value={this.state.name} type="text" className="form-control" id="name" placeholder="name"/>
           </div>
 
           <div className="form-group">
@@ -55,7 +61,8 @@ class SearchGifs extends React.Component {
 }
 
 SearchGifs.propTypes = {
-  addNewImage: React.PropTypes.func
+  addNewImage: React.PropTypes.func,
+  loadGifsFromServer: React.PropTypes.func
 };
 
 export default SearchGifs;

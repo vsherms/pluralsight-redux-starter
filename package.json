@@ -15,8 +15,11 @@
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "6.8.0",
+    "body-parser": "^1.15.0",
     "bootstrap": "3.3.6",
     "jquery": "2.2.3",
+    "mongod": "^2.0.0",
+    "mongoose": "^4.8.6",
     "react": "15.0.2",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
@@ -24,7 +27,8 @@
     "react-router-redux": "4.0.4",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
-    "toastr": "2.1.2"
+    "toastr": "2.1.2",
+    "mongodb-uri": "^0.9.7"
   },
   "devDependencies": {
     "babel-cli": "6.8.0",
