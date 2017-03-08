@@ -11,6 +11,8 @@ ShowGifs.propTypes = {
   deleteButton: React.PropTypes.bool
 };
 
+
+
 export default function ShowGifs(props) {
   let images = props.gifs.map(function(img) {
     return (

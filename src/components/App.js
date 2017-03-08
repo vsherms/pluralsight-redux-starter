@@ -2,6 +2,8 @@ import React from 'react';
 import ShowGifs from './ShowGifs';
 import SearchGifs from './SearchGifs';
 import SearchGiphy from './SearchGiphy';
+import { Link } from 'react-router';
+
 
 let testGifs = [
 
@@ -60,6 +62,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <h1>My Giphy Wonderland</h1>
+        <ul role="nav">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/searchgiphy">Search Giphy</Link></li>
+          <li><Link to="/showgifs">Show Gifs</Link></li>
+          <li><Link to="/addgifs">Add More Gifs</Link></li>
+        </ul>
+        {this.props.children}
         <SearchGiphy addNewImage={this.addNewImage}/>
         <SearchGifs addNewImage={this.addNewImage} loadGifsFromServer={this.loadGifsFromServer}/>
         <ShowGifs gifs={this.state.images} addNewImage={this.addNewImage} addButton deleteButton handleDelete={this.handleDelete}/>
