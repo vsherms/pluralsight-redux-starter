@@ -6,6 +6,12 @@ import open from 'open';
 const bodyParser = require('body-parser');
 const uriUtil = require('mongodb-uri');
 const router = express.Router();
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const authConfig = require('./authConfig');
+const morgan = require('morgan');
+const apiRoutes = express.Router();
+
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -19,14 +25,15 @@ const options = {
 };
 mongoose.connect(mongooseUri, options);
 
+const app = express();
 
-
+app.set('superSecret', authConfig.secret);
 
 
 /* eslint-disable no-console */
 
 
-const app = express();
+
 const compiler = webpack(config);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -37,6 +44,23 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
+
+app.use(morgan('dev'));
+app.post('/newuser', function(req, res) {
+  console.log(req.body.password, req.body.password.length);
+  let user = new User({
+    username: req.body.username,
+    password: req.body.password
+  });
+
+  user.save(function(err) {
+    if (err) throw err;
+    console.log('User saved successfully');
+    res.json({ success: true});
+  });
+});
+
+
 
 app.post('/gifs',function(req, res){
 

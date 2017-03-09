@@ -7,11 +7,15 @@ import Home from './components/Home';
 import SearchGiphy from './components/SearchGiphy';
 import ShowGifs from './components/ShowGifs';
 import SearchGifs from './components/SearchGifs';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 ReactDOM.render((
            <Router history={browserHistory}>
              <Route path="/" component={App}>
                <IndexRoute component={Home}/>
+               <Route path="/login" component={Login}/>
+               <Route path="/signup" component={SignUp}/>
                <Route path="/searchgiphy" component={SearchGiphy}/>
                <Route path="/showgifs" component={ShowGifs}/>
                <Route path="/addgifs" component={SearchGifs}/>

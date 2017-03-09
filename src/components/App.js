@@ -65,6 +65,8 @@ class App extends React.Component {
         <h1>My Giphy Wonderland</h1>
         <ul role="nav">
           <li><Link to="/">Home</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Link to="/login">Login</Link></li>
           <li><Link to="/searchgiphy">Search Giphy</Link></li>
           <li><Link to="/showgifs">Show Gifs</Link></li>
           <li><Link to="/addgifs">Add More Gifs</Link></li>
