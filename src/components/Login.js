@@ -24,7 +24,7 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
   }
 
   addNewUser(user) {
-    fetch('/newuser', {
+    fetch('/api/authenticate', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
