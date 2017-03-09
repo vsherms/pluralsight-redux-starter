@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 
 export default class Login extends React.Component{
 
@@ -36,12 +37,13 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
     .then(result => result.json());
     }
 
-    handleUserAdd(e){
-      console.log(e);
+
+    handleUserAdd(event){
       event.preventDefault();
       let user = {username: this.state.username, password: this.state.password};
       this.addNewUser(user);
       this.setState({username: "", password: ""});
+      browserHistory.push("/login");
     }
 
 
