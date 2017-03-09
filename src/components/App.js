@@ -69,10 +69,7 @@ class App extends React.Component {
           <li><Link to="/showgifs">Show Gifs</Link></li>
           <li><Link to="/addgifs">Add More Gifs</Link></li>
         </ul>
-        {this.props.children}
-        <SearchGiphy addNewImage={this.addNewImage}/>
-        <SearchGifs addNewImage={this.addNewImage} loadGifsFromServer={this.loadGifsFromServer}/>
-        <ShowGifs gifs={this.state.images} addNewImage={this.addNewImage} addButton deleteButton handleDelete={this.handleDelete}/>
+        {this.props.children || "<Home/>"}
       </div>
     );
   }

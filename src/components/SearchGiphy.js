@@ -7,11 +7,30 @@ class SearchGiphy extends React.Component {
     super(props);
     this.state = {
       keyword: "",
-      foundImages: []
+      foundImages: [],
+      images: []
     };
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeClickedImage = this.removeClickedImage.bind(this);
+    this.addNewImage = this.addNewImage.bind(this);
+  }
+
+  addNewImage(img) {
+    fetch('/gifs', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(img)
+    })
+    .then(result => result.json())
+    .then(image => {
+      let allImages = this.state.images.slice();
+      allImages.push(image);
+      this.setState({images: allImages});
+    });
   }
 
   handleKeywordChange(e) {
@@ -51,7 +70,7 @@ class SearchGiphy extends React.Component {
 
             <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
          </form>
-         <ShowGifs addNewImage={this.props.addNewImage} removeClickedImage={this.removeClickedImage}
+         <ShowGifs addNewImage={this.addNewImage} removeClickedImage={this.removeClickedImage}
            gifs={this.state.foundImages} handleSubmit={this.handleSubmit}/>
       </div>
     );
@@ -59,7 +78,7 @@ class SearchGiphy extends React.Component {
 }
 
 SearchGiphy.propTypes = {
-  addNewImage: React.PropTypes.func.isRequired,
+  addNewImage: React.PropTypes.func,
   removeClickedImage: React.PropTypes.func
 };
 

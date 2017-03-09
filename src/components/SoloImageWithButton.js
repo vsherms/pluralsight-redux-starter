@@ -8,6 +8,8 @@ class SoloImageWithButton extends React.Component {
     this.triggerDelete = this.triggerDelete.bind(this);
   }
 
+  
+
   addOurImage() {
     this.props.addNewImage(this.props.img);
     this.props.removeClickedImage(this.props.img);
