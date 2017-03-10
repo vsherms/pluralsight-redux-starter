@@ -6,7 +6,6 @@ export default function ShowGifs(props) {
       return (
        <SoloImageWithButton key={img._id} img={img}
        addNewImage={props.addNewImage} addButton={props.addButton}
-       removeClickedImage={props.removeClickedImage}
        handleSubmit={props.handleSubmit} handleDelete={props.handleDelete} deleteButton={props.deleteButton}/>
      );});
 
@@ -21,7 +20,6 @@ export default function ShowGifs(props) {
    gifs: React.PropTypes.array,
    addNewImage: React.PropTypes.func,
    addButton: React.PropTypes.bool,
-   removeClickedImage: React.PropTypes.func,
    handleSubmit: React.PropTypes.func,
    handleDelete: React.PropTypes.func,
    deleteButton: React.PropTypes.bool
