@@ -1,54 +1,28 @@
 import React from 'react';
 import SoloImageWithButton from './SoloImageWithButton';
 
-export default class ShowGifs extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      images: []
-    };
-    this.loadGifsFromServer = this.loadGifsFromServer.bind(this);
-  }
+export default function ShowGifs(props) {
+   let images = props.gifs.map(function(img) {
+      return (
+       <SoloImageWithButton key={img._id} img={img}
+       addNewImage={props.addNewImage} addButton={props.addButton}
+       removeClickedImage={props.removeClickedImage}
+       handleSubmit={props.handleSubmit} handleDelete={props.handleDelete} deleteButton={props.deleteButton}/>
+     );});
 
-  componentDidMount(){
-    this.loadGifsFromServer();
-  }
-
-  loadGifsFromServer() {
-    fetch('/gifs')
-       .then(result => result.json())
-       .then(data => this.setState({
-         images: data}));
-  }
-
-  handleDelete(id) {
-    let newList = this.state.images.filter(img => img._id !== id);
-    this.setState({images: newList});
-    fetch('/gifs/' + id, {
-      method: 'DELETE'
-    });
-  }
-
-  render() {
-    let deleteButton = (
-      <button onClick={this.handleDelete} type="submit"
-       className="brn btn-danger">Delete</button>
-    );
-
-   let image = this.state.images.map(function(img){
-     return(
-       <div key={img.name} id={img._id}>
-         <img src={img.url}></img>
-         {deleteButton}
-         <h3>{img.description}</h3>
-
+     return (
+       <div>
+       {images}
        </div>
-   );});
+     );
+ }
 
-    return (
-      <div>
-        {image}
-      </div>
-    );
-  }
-}
+ ShowGifs.propTypes = {
+   gifs: React.PropTypes.array,
+   addNewImage: React.PropTypes.func,
+   addButton: React.PropTypes.bool,
+   removeClickedImage: React.PropTypes.func,
+   handleSubmit: React.PropTypes.func,
+   handleDelete: React.PropTypes.func,
+   deleteButton: React.PropTypes.bool
+  };

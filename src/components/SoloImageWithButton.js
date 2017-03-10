@@ -6,17 +6,32 @@ class SoloImageWithButton extends React.Component {
     super();
     this.addOurImage = this.addOurImage.bind(this);
     this.triggerDelete = this.triggerDelete.bind(this);
+    this.addNewImage = this.addNewImage.bind(this);
   }
 
-  
+
 
   addOurImage() {
-    this.props.addNewImage(this.props.img);
+    this.addNewImage(this.props.img);
     this.props.removeClickedImage(this.props.img);
   }
   triggerDelete(e){
     console.log(this.props.img._id);
     this.props.handleDelete(this.props.img._id);
+  }
+
+  addNewImage(img) {
+    fetch('/gifs', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(img)
+    })
+    .then(result => result.json())
+    .then(image => {
+    });
   }
 
   render() {

@@ -7,13 +7,35 @@ class SearchGiphy extends React.Component {
     super(props);
     this.state = {
       keyword: "",
-      foundImages: [],
-      images: []
+      foundImages: []
     };
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeClickedImage = this.removeClickedImage.bind(this);
     this.addNewImage = this.addNewImage.bind(this);
+
+
+  }
+
+  handleKeywordChange(e) {
+    this.setState({keyword: e.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&api_key=dc6zaTOxFJmzC&limit=6`)
+       .then(result => result.json())
+       .then(data => this.setState({
+         foundImages: this.convertToShowGifs(this.state.keyword, data.data)}));
+  }
+
+  convertToShowGifs(keyword, foundImages) {
+    return foundImages.map(image => ({
+      _id: image.id,
+      name: image.id,
+      url: image.images.original.url,
+      description: keyword + " " + image.slug
+    }));
   }
 
   addNewImage(img) {
@@ -33,25 +55,6 @@ class SearchGiphy extends React.Component {
     });
   }
 
-  handleKeywordChange(e) {
-    this.setState({keyword: e.target.value});
-  }
-  handleSubmit(event) {
-    event.preventDefault();
-    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&api_key=dc6zaTOxFJmzC&limit=6`)
-       .then(result => result.json())
-       .then(data => this.setState({
-         foundImages: this.convertToShowGifs(this.state.keyword, data.data)}));
-  }
-
-  convertToShowGifs(keyword, foundImages) {
-    return foundImages.map(image => ({
-      _id: image.id,
-      name: image.id,
-      url: image.images.original.url,
-      description: keyword + " " + image.slug
-    }));
-  }
 
   removeClickedImage(img) {
     let filArr = this.state.foundImages.filter(function(x){return x.name !== img.name;});

@@ -69,3 +69,14 @@ addNewImage(img) {
     this.setState({images: allImages});
   });
 }
+
+}
+
+handleDelete(imgId) {
+  console.log(this.state.images);
+  let newList = this.state.images.filter(img => img._id !== imgId);
+  this.setState({images: newList});
+  fetch('/gifs/' + imgId, {
+    method: 'DELETE'
+  });
+}

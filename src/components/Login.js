@@ -5,13 +5,14 @@ export default class SignUp extends React.Component {
     super();
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      token: ""
     };
 
-this.handleUserNameChange = this.handleUserNameChange.bind(this);
-this.handlePasswordChange = this.handlePasswordChange.bind(this);
-this.addNewUser = this.addNewUser.bind(this);
-this.handleUserAdd = this.handleUserAdd.bind(this);
+    this.handleUserNameChange = this.handleUserNameChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.authenticateUser = this.authenticateUser.bind(this);
+    this.handleUserAuth = this.handleUserAuth.bind(this);
 
 
   }
@@ -23,7 +24,7 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
     this.setState({password: e.target.value});
   }
 
-  addNewUser(user) {
+  authenticateUser(user) {
     fetch('/api/authenticate', {
       method: 'POST',
       headers: {
@@ -32,14 +33,19 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
       },
       body: JSON.stringify(user)
     })
-    .then(result => result.json());
-    }
+    .then(result => result.json())
+    .then(image => {
+      let allImages = this.state.images.slice();
+      allImages.push(image);
+      this.setState({images: allImages});
+    });
+  }
 
-    handleUserAdd(e){
+    handleUserAuth(e){
       console.log(e);
       event.preventDefault();
       let user = {username: this.state.username, password: this.state.password};
-      this.addNewUser(user);
+      this.authenticateUser(user);
       this.setState({username: "", password: ""});
     }
 
@@ -57,7 +63,7 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
             <input onChange={this.handlePasswordChange} value={this.state.password}type="text" className="form-control" id="password" placeholder="password"/>
           </div>
 
-          <button onClick={this.handleUserAdd} type="submit" className="btn btn-primary">Submit</button>
+          <button onClick={this.handleUserAuth} type="submit" className="btn btn-primary">Submit</button>
        </form>
     );
   }
