@@ -10,13 +10,15 @@ import SearchGifs from './components/SearchGifs';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ImageStore from './stores/ImageStore';
+import UserStore from './stores/UserStore';
 import {Provider} from 'mobx-react';
 import DisplayGifs from './components/DisplayGifs';
 
 const imageStore = new ImageStore();
+const userStore = new UserStore();
 
 ReactDOM.render((
-         <Provider imageStore={imageStore}>
+         <Provider imageStore={imageStore} userStore={userStore}>
            <Router history={browserHistory}>
              <Route path="/" component={App}>
                <IndexRoute component={Home}/>

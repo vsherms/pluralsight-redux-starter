@@ -1,6 +1,7 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
-export default class SignUp extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -11,7 +12,6 @@ export default class SignUp extends React.Component {
 
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.authenticateUser = this.authenticateUser.bind(this);
     this.handleUserAuth = this.handleUserAuth.bind(this);
 
 
@@ -24,28 +24,10 @@ export default class SignUp extends React.Component {
     this.setState({password: e.target.value});
   }
 
-  authenticateUser(user) {
-    fetch('/api/authenticate', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-    .then(result => result.json())
-    .then(image => {
-      let allImages = this.state.images.slice();
-      allImages.push(image);
-      this.setState({images: allImages});
-    });
-  }
-
-    handleUserAuth(e){
-      console.log(e);
+    handleUserAuth(event){
       event.preventDefault();
       let user = {username: this.state.username, password: this.state.password};
-      this.authenticateUser(user);
+      this.props.userStore.authUser(user);
       this.setState({username: "", password: ""});
     }
 
@@ -68,3 +50,9 @@ export default class SignUp extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  userStore: React.PropTypes.object
+};
+
+export default inject('userStore')(observer(Login));

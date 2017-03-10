@@ -43,6 +43,8 @@ class SearchGiphy extends React.Component {
   }
 
   render() {
+    if(this.props.userStore.isLoggedIn) {
+
     return (
       <div>
         <form method="" role="form">
@@ -58,15 +60,23 @@ class SearchGiphy extends React.Component {
            gifs={this.state.foundImages} handleSubmit={this.handleSubmit}/>
       </div>
     );
+  } else{
+    return (
+      <div>
+        Log In To Search Giphy.com!!!!!
+      </div>
+    );
+  }
   }
 }
 
 SearchGiphy.propTypes = {
   addNewImage: React.PropTypes.func,
   removeClickedImage: React.PropTypes.func,
-  imageStore: React.PropTypes.object
+  imageStore: React.PropTypes.object,
+  userStore: React.PropTypes.object
 };
 
 
 
-export default inject('imageStore')(observer(SearchGiphy));
+export default inject('imageStore', 'userStore')(observer(SearchGiphy));

@@ -47,8 +47,8 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(morgan('dev'));
+
 app.post('/newuser', function(req, res) {
-  console.log(req.body.password, req.body.password.length);
   let user = new User({
     username: req.body.username,
     password: hash.generate(req.body.password)
@@ -71,7 +71,7 @@ apiRoutes.post('/authenticate', function(req, res) {
     if (!user) {
       res.json({ success: false, message: 'Authentication failed. User not found.'});
     } else if(user) {
-      console.log(hash.verify(req.body.password, user.password));
+      console.log(req.body.username, req.body.password, user);
 
       if (!hash.verify(req.body.password, user.password)) {
         res.json({ success: false, message: 'Authentication failed. Incorrect password.'});
