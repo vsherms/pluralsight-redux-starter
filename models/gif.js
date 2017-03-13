@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const GifSchema = new mongoose.Schema({
   name: String,
   url: String,
-  description: String
+  description: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   });
 
 

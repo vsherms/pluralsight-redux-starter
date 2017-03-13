@@ -1,5 +1,6 @@
 import React from 'react';
 import SoloImageWithButton from './SoloImageWithButton';
+import {Col} from 'react-bootstrap';
 
 export default function ShowGifs(props) {
    let images = props.gifs.map(function(img) {

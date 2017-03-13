@@ -1,4 +1,5 @@
 import React from 'react';
+import {Col, Image, Button, Glyphicon} from 'react-bootstrap';
 
 class SoloImageWithButton extends React.Component {
 
@@ -23,16 +24,19 @@ class SoloImageWithButton extends React.Component {
        className="brn btn-primary">Add To My List</button>
     );
     let deleteButton = (
-      <button onClick={this.triggerDelete} type="submit"
-       className="brn btn-danger">Delete</button>
+      <Button style={{width:'280px', marginBottom: '10px'}} onClick={this.triggerDelete} type="submit"
+       className="brn btn-danger" block><Glyphicon glyph="remove-circle"/>Delete</Button>
     );
 
+     const imageWellStyle = {maxWidth: 280, margin: '0px', padding:'0px'};
 
     return (
-       <div key={this.props.img.name}>
-         <img className="gifs" src={this.props.img.url}></img>
-         {this.props.addButton ? deleteButton : ourButton}
-         <h3>{this.props.img.description}</h3>
+
+       <div className="text-center col-lg-3 col-md-4 col-sm-6" key={this.props.img.name}>
+         <div style={imageWellStyle}>
+           <Image height="280" width="280" src={this.props.img.url} rounded/>
+           {this.props.addButton ? deleteButton : ourButton}
+         </div>
        </div>
 
     );
