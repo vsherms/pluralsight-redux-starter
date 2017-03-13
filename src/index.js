@@ -13,6 +13,8 @@ import ImageStore from './stores/ImageStore';
 import UserStore from './stores/UserStore';
 import {Provider} from 'mobx-react';
 import DisplayGifs from './components/DisplayGifs';
+import EnsureLoggedInContainer from './components/EnsureLoggedInContainer';
+import Logout from './components/Logout';
 
 const imageStore = new ImageStore();
 const userStore = new UserStore();
@@ -20,13 +22,16 @@ const userStore = new UserStore();
 ReactDOM.render((
          <Provider imageStore={imageStore} userStore={userStore}>
            <Router history={browserHistory}>
-             <Route path="/" component={App}>
-               <IndexRoute component={Home}/>
                <Route path="/login" component={Login}/>
                <Route path="/signup" component={SignUp}/>
-               <Route path="/searchgiphy" component={SearchGiphy}/>
-               <Route path="/showgifs" component={DisplayGifs}/>
-               <Route path="/addgifs" component={SearchGifs}/>
+               <Route component={EnsureLoggedInContainer}>
+                 <Route path="/" component={App}>
+                   <IndexRoute component={Home}/>
+                   <Route path="/searchgiphy" component={SearchGiphy}/>
+                   <Route path="/showgifs" component={DisplayGifs}/>
+                   <Route path="/addgifs" component={SearchGifs}/>
+                   <Route path="/logout" component={Logout}/>
+               </Route>
              </Route>
            </Router>
           </Provider>

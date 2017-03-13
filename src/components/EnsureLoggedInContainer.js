@@ -1,49 +1,28 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { isLoggedIn } from './route-authentication.js';
+import { observer, inject } from 'mobx-react';
 
-class HomePage extends Component {
 
-  componentWillMount() {
-    /**
-    * Here the user will be redirected to the '/auth' route,
-    * if they do not meet the isLoggedIn requirements.
-    */
-    if (!isLoggedIn()) {
-      browserHistory.push('/auth');
+class EnsureLoggedInContainer extends React.Component {
+  componentDidMount() {
+
+
+    if (!this.props.userStore.isLoggedIn) {
+      browserHistory.replace("/login");
     }
   }
 
   render() {
-    return (
-      <div>
-        Hello, World!
-      </div>
-    );
-  }
-}
-
-
-export default class EnsureLoggedInContainer extends React.Component {
-
-
-
-
-  componentWillMount() {
-    /**
-    * Here the user will be redirected to the '/auth' route,
-    * if they do not meet the isLoggedIn requirements.
-    */
-    if (!isLoggedIn()) {
-      browserHistory.push('/login');
-    }
-  }
-
-  render() {
-    if (isLoggedIn) {
+    if (this.props.userStore.isLoggedIn) {
       return this.props.children
     } else {
       return null;
     }
   }
 }
+
+EnsureLoggedInContainer.propTypes = {
+  userStore: React.PropTypes.object
+};
+
+export default inject('userStore')(observer(EnsureLoggedInContainer));

@@ -8,20 +8,30 @@ class SearchGiphy extends React.Component {
     super(props);
     this.state = {
       keyword: "",
-      foundImages: []
+      foundImages: [],
+      randomize: false
     };
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addAndRemoveImage = this.addAndRemoveImage.bind(this);
+    this.handleRandomize = this.handleRandomize.bind(this);
   }
 
   handleKeywordChange(e) {
     this.setState({keyword: e.target.value});
   }
 
+  handleRandomize(e){
+    this.setState({randomize: e.target.checked});
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&api_key=dc6zaTOxFJmzC&limit=6`)
+    let randomOffset = 0;
+    if(this.state.randomize){
+      randomOffset = Math.floor(Math.random() * 100);
+    }
+    fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&api_key=dc6zaTOxFJmzC&limit=6&offset=${randomOffset}`)
        .then(result => result.json())
        .then(data => this.setState({
          foundImages: this.convertToShowGifs(this.state.keyword, data.data)}));
@@ -43,8 +53,6 @@ class SearchGiphy extends React.Component {
   }
 
   render() {
-    if(this.props.userStore.isLoggedIn) {
-
     return (
       <div>
         <form method="" role="form">
@@ -55,18 +63,12 @@ class SearchGiphy extends React.Component {
             </div>
 
             <button onClick={this.handleSubmit} type="submit" className="btn btn-primary">Submit</button>
+            <span className="randomize"><input type="checkbox" name="randomize1" value="randomize" onChange={this.handleRandomize}/> Randomize search results</span>
          </form>
          <ShowGifs addNewImage={this.addAndRemoveImage} handleDelete={this.props.imageStore.handleDelete}
            gifs={this.state.foundImages} handleSubmit={this.handleSubmit}/>
       </div>
     );
-  } else{
-    return (
-      <div>
-        Log In To Search Giphy.com!!!!!
-      </div>
-    );
-  }
   }
 }
 
@@ -74,7 +76,8 @@ SearchGiphy.propTypes = {
   addNewImage: React.PropTypes.func,
   removeClickedImage: React.PropTypes.func,
   imageStore: React.PropTypes.object,
-  userStore: React.PropTypes.object
+  userStore: React.PropTypes.object,
+  handleRandomize: React.PropTypes.func
 };
 
 

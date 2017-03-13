@@ -45,8 +45,6 @@ class SearchGifs extends React.Component {
   }
 
   render() {
-    if(this.props.userStore.isLoggedIn) {
-
     return (
       <form method="" role="form">
           <legend>Add New Gif</legend>
@@ -66,13 +64,6 @@ class SearchGifs extends React.Component {
           <button onClick={this.handleNewGif.bind(this)} type="submit" className="btn btn-primary">Submit</button>
        </form>
     );
-    }else{
-      return (
-      <div>
-        Log In To Add More Gifs!!!!!
-      </div>
-    );
-  }
   }
 }
 

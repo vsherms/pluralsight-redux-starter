@@ -1,5 +1,6 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
+import { Jumbotron } from 'react-bootstrap';
 
 export default class Login extends React.Component{
 
@@ -49,19 +50,26 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
 
   render(){
     return(
-      <form method="" role="form">
-          <legend>Please Sign Up</legend>
+      <div>
+      <h2>MY GIPHY WONDERLAND</h2>
+        <div className="login-form">
+          <Jumbotron>
+          <form method="" role="form">
+              <legend>Please Sign Up</legend>
 
-          <div className="form-group">
-            <input onChange={this.handleUserNameChange} value={this.state.username} type="text" className="form-control" id="username" placeholder="username"/>
-          </div>
+              <div className="form-group">
+                <input onChange={this.handleUserNameChange} value={this.state.username} type="text" className="form-control" id="username" placeholder="username"/>
+              </div>
 
-          <div className="form-group">
-            <input onChange={this.handlePasswordChange} value={this.state.password}type="text" className="form-control" id="password" placeholder="password"/>
-          </div>
+              <div className="form-group">
+                <input onChange={this.handlePasswordChange} value={this.state.password}type="text" className="form-control" id="password" placeholder="password"/>
+              </div>
 
-          <button onClick={this.handleUserAdd} type="submit" className="btn btn-primary">Submit</button>
-       </form>
+              <button onClick={this.handleUserAdd} type="submit" className="btn btn-primary">Submit</button>
+           </form>
+           </Jumbotron>
+         </div>
+       </div>
     );
   }
 }

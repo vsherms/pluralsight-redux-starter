@@ -1,4 +1,5 @@
 import {extendObservable} from 'mobx';
+import {browserHistory} from 'react-router';
 
 export default class UserStore {
   constructor(){
@@ -7,7 +8,8 @@ export default class UserStore {
       password: "",
       token: "",
       admin: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      failedLogin: false
     });
 
     this.authUser = this.authUser.bind(this);
@@ -32,15 +34,21 @@ export default class UserStore {
       this.token = res.token;
       if(res.token){
         this.isLoggedIn = true;
+        browserHistory.replace("/");
+      } else {
+        this.failedLogin = true;
       }
       console.log(this.isLoggedIn);
     });
   }
 
-
   setUser(user) {
-    this.name = user.username;
+    this.username = user.username;
     this.password = user.password;
 
+  }
+
+  logout(){
+    browserHistory.replace("/");
   }
 }

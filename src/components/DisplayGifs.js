@@ -21,8 +21,6 @@ class DisplayGifs extends React.Component {
   }
 
   render() {
-    if(this.props.userStore.isLoggedIn) {
-
     return(
       <div>
       <ShowGifs gifs={this.props.imageStore.images} handleDelete={this.props.imageStore.handleDelete}
@@ -30,13 +28,6 @@ class DisplayGifs extends React.Component {
 
       </div>
     );
-  } else{
-    return (
-      <div>
-        Log In To See Gifs!!!!!!
-      </div>
-    );
-  }
   }
 }
 

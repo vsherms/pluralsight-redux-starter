@@ -1,5 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import { browserHistory, Link } from 'react-router';
+import { Jumbotron } from 'react-bootstrap';
+
+
 
 class Login extends React.Component {
   constructor() {
@@ -28,26 +32,52 @@ class Login extends React.Component {
       event.preventDefault();
       let user = {username: this.state.username, password: this.state.password};
       this.props.userStore.authUser(user);
+      this.props.userStore.setUser(user);
       this.setState({username: "", password: ""});
     }
 
 
   render(){
-    return(
-      <form method="" role="form">
-          <legend>Please Log In</legend>
 
-          <div className="form-group">
-            <input onChange={this.handleUserNameChange} value={this.state.username} type="text" className="form-control" id="username" placeholder="username"/>
-          </div>
+    let signUpLink = (<Link className="signup-link" to="/signup">Sign Up</Link>);
 
-          <div className="form-group">
-            <input onChange={this.handlePasswordChange} value={this.state.password}type="text" className="form-control" id="password" placeholder="password"/>
-          </div>
+    let loginForm = (
+      <div>
+      <h2>MY GIPHY WONDERLAND</h2>
+      <div className="login-form">
+        <Jumbotron>
+          <form method="" role="form">
+            <legend>Please Log In</legend>
 
-          <button onClick={this.handleUserAuth} type="submit" className="btn btn-primary">Submit</button>
-       </form>
-    );
+            <div className="form-group">
+              <input onChange={this.handleUserNameChange} value={this.state.username} type="text" className="form-control" id="username" placeholder="username"/>
+            </div>
+
+            <div className="form-group">
+              <input onChange={this.handlePasswordChange} value={this.state.password}type="text" className="form-control" id="password" placeholder="password"/>
+            </div>
+
+            <button onClick={this.handleUserAuth} type="submit" className="btn btn-primary">Submit</button>
+            {signUpLink}
+          </form>
+        </Jumbotron>
+      </div>
+    </div>);
+
+    if(this.props.userStore.failedLogin){
+      return(
+        <div>
+          {loginForm}
+          <h4 style={{color: "red"}}>Please enter valid username and password.</h4>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          {loginForm}
+        </div>
+      );
+    }
   }
 }
 

@@ -30,7 +30,7 @@ class SoloImageWithButton extends React.Component {
 
     return (
        <div key={this.props.img.name}>
-         <img src={this.props.img.url}></img>
+         <img className="gifs" src={this.props.img.url}></img>
          {this.props.addButton ? deleteButton : ourButton}
          <h3>{this.props.img.description}</h3>
        </div>
