@@ -12,7 +12,7 @@ import SignUp from './components/SignUp';
 import ImageStore from './stores/ImageStore';
 import UserStore from './stores/UserStore';
 import {Provider} from 'mobx-react';
-import DisplayGifs from './components/DisplayGifs';
+import Library from './components/Library';
 import EnsureLoggedInContainer from './components/EnsureLoggedInContainer';
 import Logout from './components/Logout';
 
@@ -28,7 +28,8 @@ ReactDOM.render((
                  <Route path="/" component={App}>
                    <IndexRoute component={Home}/>
                    <Route path="/searchgiphy" component={SearchGiphy}/>
-                   <Route path="/showgifs" component={DisplayGifs}/>
+                   <Route path="/yourgifs" component={Library}/>
+                   <Route path="/allgifs" component={Library}/>
                    <Route path="/addgifs" component={SearchGifs}/>
                    <Route path="/logout" component={Logout}/>
                </Route>

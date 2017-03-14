@@ -1,5 +1,7 @@
 import {extendObservable} from 'mobx';
 import {browserHistory} from 'react-router';
+import React from 'react';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 export default class UserStore {
   constructor(){
@@ -9,7 +11,8 @@ export default class UserStore {
       token: "",
       admin: false,
       isLoggedIn: false,
-      failedLogin: false
+      failedLogin: false,
+      userId: ""
     });
 
     this.authUser = this.authUser.bind(this);
@@ -30,15 +33,14 @@ export default class UserStore {
     })
     .then(result => result.json())
     .then(res => {
-      console.log(res);
       this.token = res.token;
+      this.userId = res.userId;
       if(res.token){
         this.isLoggedIn = true;
         browserHistory.replace("/");
       } else {
         this.failedLogin = true;
       }
-      console.log(this.isLoggedIn);
     });
   }
 

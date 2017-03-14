@@ -5,13 +5,21 @@ import SearchGiphy from './SearchGiphy';
 import Logout from './Logout';
 import { Link } from 'react-router';
 import { observer, inject } from 'mobx-react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown } from 'react-bootstrap';
 import {NavbarHeader, NavbarToggle, NavbarCollapse, NavbarBrand} from 'react-bootstrap/lib/NavbarHeader';
 import { LinkContainer} from 'react-router-bootstrap';
 
 
 
 class App extends React.Component {
+  constructor(){
+    super();
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.imageStore.loadGifsFromServer();
+  }
 
 
   render() {
@@ -28,7 +36,10 @@ class App extends React.Component {
           <Navbar.Collapse>
           <Nav>
             <LinkContainer to={{pathname: '/searchgiphy'}}><NavItem>Search Giphy</NavItem></LinkContainer>
-            <LinkContainer to={{pathname: '/showgifs'}}><NavItem>Library</NavItem></LinkContainer>
+            <NavDropdown title="Library" id="basic-nav-dropdown">
+              <LinkContainer onSelect={this.props.imageStore.showYourGifs} to={{pathname: '/yourgifs'}}><NavItem>Your Gifs</NavItem></LinkContainer>
+              <LinkContainer onSelect={this.props.imageStore.showAllGifs} to={{pathname: '/allgifs'}}><NavItem>All Gifs</NavItem></LinkContainer>
+            </NavDropdown>
             <LinkContainer to={{pathname: '/addgifs'}}><NavItem>Add More Gifs</NavItem></LinkContainer>
           </Nav>
           <Nav pullRight className="nav-bar-right">
@@ -44,7 +55,9 @@ class App extends React.Component {
 }
 
 App.propTypes ={
-  userStore: React.PropTypes.object
+  userStore: React.PropTypes.object,
+  imageStore: React.PropTypes.object,
+  componentDidMount: React.PropTypes.func
 };
 
-export default inject('userStore')(observer(App));
+export default inject('userStore','imageStore')(observer(App));

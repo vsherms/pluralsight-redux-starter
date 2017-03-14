@@ -1,8 +1,9 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import { Jumbotron } from 'react-bootstrap';
+import { inject, observer } from 'mobx-react';
 
-export default class Login extends React.Component{
+class SignUp extends React.Component{
 
   constructor() {
     super();
@@ -35,7 +36,7 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
       },
       body: JSON.stringify(user)
     })
-    .then(result => result.json());
+    .then(result => result.json())
     }
 
 
@@ -73,3 +74,9 @@ this.handleUserAdd = this.handleUserAdd.bind(this);
     );
   }
 }
+
+SignUp.propTypes = {
+  imageStore: React.PropTypes.object
+};
+
+export default inject('imageStore')(observer(SignUp));

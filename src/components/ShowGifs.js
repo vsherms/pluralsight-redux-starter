@@ -1,18 +1,20 @@
 import React from 'react';
-import SoloImageWithButton from './SoloImageWithButton';
+import ImageComponent from './ImageComponent';
 import {Col} from 'react-bootstrap';
 
 export default function ShowGifs(props) {
+
    let images = props.gifs.map(function(img) {
+
       return (
-       <SoloImageWithButton key={img._id} img={img}
-       addNewImage={props.addNewImage} addButton={props.addButton}
-       handleSubmit={props.handleSubmit} handleDelete={props.handleDelete} deleteButton={props.deleteButton}/>
+       <ImageComponent key={img._id} img={img}
+       addNewImage={props.addNewImage} prepareDeleteButton={props.prepareDeleteButton}
+       handleSubmit={props.handleSubmit} handleDelete={props.handleDelete} addButton={props.addButton}/>
      );});
 
      return (
        <div>
-       {images}
+         {images}
        </div>
      );
  }
@@ -23,5 +25,6 @@ export default function ShowGifs(props) {
    addButton: React.PropTypes.bool,
    handleSubmit: React.PropTypes.func,
    handleDelete: React.PropTypes.func,
-   deleteButton: React.PropTypes.bool
+   deleteButton: React.PropTypes.bool,
+   prepareDeleteButton: React.PropTypes.func
   };

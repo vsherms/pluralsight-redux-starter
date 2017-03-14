@@ -1,4 +1,6 @@
+import React from 'react';
 import {extendObservable} from 'mobx';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 export default class ImageStore {
   constructor(){
@@ -7,7 +9,13 @@ export default class ImageStore {
     });
     this.addNewImage = this.addNewImage.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.setImages = this.setImages.bind(this);
+    this.loadGifsFromServer = this.loadGifsFromServer.bind(this);
+  }
+
+  loadGifsFromServer() {
+    fetch('/gifs')
+       .then(result => result.json())
+       .then(images => this.images = images);
   }
 
   handleDelete(imgId) {
@@ -28,7 +36,8 @@ export default class ImageStore {
       body: JSON.stringify({
         name: img.name,
         url: img.url,
-        description: img.description
+        description: img.description,
+        userId: img.userId
       })
     })
     .then(result => result.json())
@@ -38,10 +47,5 @@ export default class ImageStore {
       allImages.push(image);
       this.images = allImages;
     });
-  }
-
-
-  setImages(images) {
-    this.images = images;
   }
 }
