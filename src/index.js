@@ -5,8 +5,7 @@ import App from './components/App';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import Home from './components/Home';
 import SearchGiphy from './components/SearchGiphy';
-import ShowGifs from './components/ShowGifs';
-import SearchGifs from './components/SearchGifs';
+import AddGifToLib from './components/AddGifToLib';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import ImageStore from './stores/ImageStore';
@@ -30,7 +29,7 @@ ReactDOM.render((
                    <Route path="/searchgiphy" component={SearchGiphy}/>
                    <Route path="/yourgifs" component={Library}/>
                    <Route path="/allgifs" component={Library}/>
-                   <Route path="/addgifs" component={SearchGifs}/>
+                   <Route path="/addgifs" component={AddGifToLib}/>
                    <Route path="/logout" component={Logout}/>
                </Route>
              </Route>

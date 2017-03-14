@@ -42,7 +42,6 @@ export default class ImageStore {
     })
     .then(result => result.json())
     .then(image => {
-      console.log(image, img);
       let allImages = this.images;
       allImages.push(image);
       this.images = allImages;

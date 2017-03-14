@@ -1,7 +1,7 @@
 import React from 'react';
-import ShowGifs from './ShowGifs';
 import { observer, inject } from 'mobx-react';
 import { Grid, Row, Button, Glyphicon } from 'react-bootstrap';
+import ImageComponent from './ImageComponent';
 
 class SearchGiphy extends React.Component {
 
@@ -14,9 +14,9 @@ class SearchGiphy extends React.Component {
     };
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.addAndRemoveImage = this.addAndRemoveImage.bind(this);
+    this.saveToLibRemoveFromList = this.saveToLibRemoveFromList.bind(this);
     this.handleRandomize = this.handleRandomize.bind(this);
-    this.addButton = this.addButton.bind(this);
+    this.prepareImages = this.prepareImages.bind(this);
   }
 
   handleKeywordChange(e) {
@@ -40,7 +40,6 @@ class SearchGiphy extends React.Component {
   }
 
   convertToShowGifs(keyword, foundImages, userId) {
-    console.log(userId);
     return foundImages.map(image => ({
       _id: image.id,
       name: image.id,
@@ -50,16 +49,19 @@ class SearchGiphy extends React.Component {
     }));
   }
 
-  addButton(img){
-    return (
-      <Button style={{width: '280px', marginBottom: '10px'}} onClick={this.addOurImage} bsStyle="success" Glyphicon glyph="plus-sign" block>Add To Library</Button>
-    );
-  }
-
-  addAndRemoveImage(img){
+  saveToLibRemoveFromList(img){
     this.props.imageStore.addNewImage(img);
     let filArr = this.state.foundImages.filter(function(x){return x.name !== img.name;});
     this.setState({foundImages: filArr});
+  }
+
+  prepareImages(){
+    return this.state.foundImages.map(img =>
+    <ImageComponent
+    key={img._id}
+    img={img}
+    displaytype={'giphysearch'}
+    saveToLibRemoveFromList={this.saveToLibRemoveFromList}/>);
   }
 
   render() {
@@ -77,8 +79,7 @@ class SearchGiphy extends React.Component {
          </form>
          <Grid>
            <Row>
-             <ShowGifs addNewImage={this.addAndRemoveImage} handleDelete={this.props.imageStore.handleDelete}
-             gifs={this.state.foundImages} handleSubmit={this.handleSubmit}/>
+             {this.prepareImages()}
            </Row>
          </Grid>
       </div>
@@ -87,11 +88,11 @@ class SearchGiphy extends React.Component {
 }
 
 SearchGiphy.propTypes = {
-  addNewImage: React.PropTypes.func,
-  removeClickedImage: React.PropTypes.func,
+  saveToLibRemoveFromList: React.PropTypes.func,
   imageStore: React.PropTypes.object,
   userStore: React.PropTypes.object,
   handleRandomize: React.PropTypes.func,
+  prepareImages: React.PropTypes.func
 };
 
 

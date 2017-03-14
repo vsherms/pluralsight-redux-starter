@@ -1,6 +1,5 @@
 import React from 'react';
-import ShowGifs from './ShowGifs';
-import SearchGifs from './SearchGifs';
+import AddGifToLib from './AddGifToLib';
 import SearchGiphy from './SearchGiphy';
 import Logout from './Logout';
 import { Link } from 'react-router';
@@ -12,14 +11,14 @@ import { LinkContainer} from 'react-router-bootstrap';
 
 
 class App extends React.Component {
-  constructor(){
-    super();
-    this.componentDidMount = this.componentDidMount.bind(this);
+  constructor(props){
+    super(props);
+
+    this.props.imageStore.loadGifsFromServer();
+
   }
 
-  componentDidMount(){
-    this.props.imageStore.loadGifsFromServer();
-  }
+
 
 
   render() {

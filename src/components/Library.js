@@ -1,5 +1,4 @@
 import React from 'react';
-import ShowGifs from './ShowGifs';
 import { observer, inject } from 'mobx-react';
 import { Row, Grid } from 'react-bootstrap';
 import ImageComponent from './ImageComponent';

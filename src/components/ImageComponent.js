@@ -6,15 +6,14 @@ class ImageComponent extends React.Component {
 
   constructor() {
     super();
-    this.addOurImage = this.addOurImage.bind(this);
+    this.triggerSaveToLibraryRemoveFromList = this.triggerSaveToLibraryRemoveFromList.bind(this);
     this.triggerDelete = this.triggerDelete.bind(this);
     this.prepareButtons = this.prepareButtons.bind(this);
   }
 
-  addOurImage() {
-    this.props.addNewImage(this.props.img);
+  triggerSaveToLibraryRemoveFromList(e) {
+    this.props.saveToLibRemoveFromList(this.props.img);
   }
-
 
   triggerDelete(e){
     this.props.imageStore.handleDelete(this.props.img._id);
@@ -30,7 +29,7 @@ class ImageComponent extends React.Component {
     }
     if(this.props.displaytype !== 'library') {
        return (
-      <Button style={{width: '280px', marginBottom: '10px'}} onClick={this.addOurImage} bsStyle="success" Glyphicon glyph="plus-sign" block>Add To Library</Button>
+      <Button style={{width: '280px', marginBottom: '10px'}} onClick={this.triggerSaveToLibraryRemoveFromList} bsStyle="success" Glyphicon glyph="plus-sign" block>Add To Library</Button>
       );
     }
     return button;
@@ -62,7 +61,9 @@ ImageComponent.propTypes = {
   userStore: React.PropTypes.object,
   prepareButtons: React.PropTypes.func,
   displaytype: React.PropTypes.string,
-  imageStore: React.PropTypes.object
+  imageStore: React.PropTypes.object,
+  triggerSaveToLibraryRemoveFromList: React.PropTypes.func,
+  saveToLibRemoveFromList: React.PropTypes.func
 };
 
 export default inject('userStore','imageStore')(observer(ImageComponent));

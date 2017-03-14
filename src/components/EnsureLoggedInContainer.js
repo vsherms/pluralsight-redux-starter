@@ -14,7 +14,7 @@ class EnsureLoggedInContainer extends React.Component {
 
   render() {
     if (this.props.userStore.isLoggedIn) {
-      return this.props.children
+      return this.props.children;
     } else {
       return null;
     }
@@ -22,7 +22,8 @@ class EnsureLoggedInContainer extends React.Component {
 }
 
 EnsureLoggedInContainer.propTypes = {
-  userStore: React.PropTypes.object
+  userStore: React.PropTypes.object,
+  children: React.PropTypes.object
 };
 
 export default inject('userStore')(observer(EnsureLoggedInContainer));

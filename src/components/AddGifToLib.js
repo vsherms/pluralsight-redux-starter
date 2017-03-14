@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-class SearchGifs extends React.Component {
+class AddGifToLib extends React.Component {
 
   constructor() {
     super();
@@ -56,9 +56,9 @@ class SearchGifs extends React.Component {
   }
 }
 
-SearchGifs.propTypes = {
+AddGifToLib.propTypes = {
   userStore: React.PropTypes.object,
   imageStore: React.PropTypes.object
 };
 
-export default inject("userStore", "imageStore")(observer(SearchGifs));
+export default inject("userStore", "imageStore")(observer(AddGifToLib));
