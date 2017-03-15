@@ -54,6 +54,7 @@ class SearchGiphy extends React.Component {
     let filArr = this.state.foundImages.filter(function(x){return x.name !== img.name;});
     this.setState({foundImages: filArr});
     this.props.imageStore.images.push(img);
+    this.props.imageStore.allImages.push(img);
   }
 
   prepareImages(){

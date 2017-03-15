@@ -22,7 +22,9 @@ export default class ImageStore {
 
   handleDelete(imgId) {
     let newList = this.images.filter(img => img._id !== imgId);
+    let allnewList = this.allImages.filter(img => img._id !== imgId);
     this.images = newList;
+    this.allImages = allnewList;
     fetch('/gifs/' + imgId, {
       method: 'DELETE'
     });

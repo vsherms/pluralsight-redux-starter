@@ -26,7 +26,6 @@ class App extends React.Component {
   onlyUserGifs(){
     let newList = this.props.imageStore.images.filter(
       img => img.user._id == this.props.userStore.userId );
-      console.log(newList);
       this.props.imageStore.images = newList;
   }
 
