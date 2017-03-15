@@ -13,13 +13,34 @@ import { LinkContainer} from 'react-router-bootstrap';
 class App extends React.Component {
   constructor(props){
     super(props);
-
-    this.props.imageStore.loadGifsFromServer();
-
+  this.handleSelect = this.handleSelect.bind(this);
+  this.onlyUserGifs = this.onlyUserGifs.bind(this);
+  this.allUserGifs = this.allUserGifs.bind(this);
+  this.handleAllSelect = this.handleAllSelect.bind(this);
   }
 
+  componentDidMount(){
+    this.props.imageStore.loadGifsFromServer();
+  }
 
+  onlyUserGifs(){
+    let newList = this.props.imageStore.images.filter(
+      img => img.user._id == this.props.userStore.userId );
+      console.log(newList);
+      this.props.imageStore.images = newList;
+  }
 
+  handleSelect(){
+    this.onlyUserGifs();
+  }
+
+  allUserGifs(){
+    this.props.imageStore.images = this.props.imageStore.allImages;
+  }
+
+  handleAllSelect(){
+    this.allUserGifs();
+  }
 
   render() {
     return (
@@ -36,8 +57,8 @@ class App extends React.Component {
           <Nav>
             <LinkContainer to={{pathname: '/searchgiphy'}}><NavItem>Search Giphy</NavItem></LinkContainer>
             <NavDropdown title="Library" id="basic-nav-dropdown">
-              <LinkContainer onSelect={this.props.imageStore.showYourGifs} to={{pathname: '/yourgifs'}}><NavItem>Your Gifs</NavItem></LinkContainer>
-              <LinkContainer onSelect={this.props.imageStore.showAllGifs} to={{pathname: '/allgifs'}}><NavItem>All Gifs</NavItem></LinkContainer>
+              <LinkContainer onSelect={this.handleSelect} eventKey={3} to={{pathname: '/yourgifs'}}><NavItem>Your Gifs</NavItem></LinkContainer>
+              <LinkContainer onSelect={this.handleAllSelect} eventKey={3.1} to={{pathname: '/allgifs'}}><NavItem>All Gifs</NavItem></LinkContainer>
             </NavDropdown>
             <LinkContainer to={{pathname: '/addgifs'}}><NavItem>Add More Gifs</NavItem></LinkContainer>
           </Nav>
@@ -56,7 +77,11 @@ class App extends React.Component {
 App.propTypes ={
   userStore: React.PropTypes.object,
   imageStore: React.PropTypes.object,
-  componentDidMount: React.PropTypes.func
+  componentDidMount: React.PropTypes.func,
+  handleSelect: React.PropTypes.func,
+  onlyUserGifs: React.PropTypes.func,
+  handleAllSelect: React.PropTypes.func,
+  allUserGifs: React.PropTypes.func
 };
 
 export default inject('userStore','imageStore')(observer(App));

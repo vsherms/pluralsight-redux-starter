@@ -129,13 +129,11 @@ apiRoutes.get('/users', function(req, res) {
 
 
 app.post('/gifs',function(req, res){
-
   let gif = new Gif();
-
   gif.name = req.body.name;
   gif.url  = req.body.url;
   gif.description = req.body.description;
-  gif.userId = req.body.userId;
+  gif.user = req.body.user;
   gif.save(function(err, gif){
     if(err){
       res.send(err);
@@ -147,7 +145,7 @@ app.post('/gifs',function(req, res){
 
 
 app.get('/gifs', function(req, res, next){
-Gif.find(function(err, gifs){
+  Gif.find().populate('user').exec(function(err, gifs){
     if(err){
       next(err);
     } else {

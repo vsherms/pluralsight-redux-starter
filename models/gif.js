@@ -5,7 +5,7 @@ const GifSchema = new mongoose.Schema({
   name: String,
   url: String,
   description: String,
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   });
 
 

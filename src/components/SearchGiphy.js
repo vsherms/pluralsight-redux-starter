@@ -36,23 +36,24 @@ class SearchGiphy extends React.Component {
     fetch(`http://api.giphy.com/v1/gifs/search?q=${this.state.keyword}&api_key=dc6zaTOxFJmzC&limit=6&offset=${randomOffset}`)
        .then(result => result.json())
        .then(data => this.setState({
-         foundImages: this.convertToShowGifs(this.state.keyword, data.data, this.props.userStore.userId)}));
+         foundImages: this.convertToShowGifs(this.state.keyword, data.data)}));
   }
 
-  convertToShowGifs(keyword, foundImages, userId) {
+  convertToShowGifs(keyword, foundImages) {
     return foundImages.map(image => ({
       _id: image.id,
       name: image.id,
       url: image.images.original.url,
-      description: keyword + " " + image.slug,
-      userId: userId
+      description: keyword + " " + image.slug
     }));
   }
 
-  saveToLibRemoveFromList(img){
+  saveToLibRemoveFromList(img, user){
+    img.user = {_id: user.userId, username: user.username};
     this.props.imageStore.addNewImage(img);
     let filArr = this.state.foundImages.filter(function(x){return x.name !== img.name;});
     this.setState({foundImages: filArr});
+    this.props.imageStore.images.push(img);
   }
 
   prepareImages(){

@@ -25,12 +25,20 @@ class AddGifToLib extends React.Component {
 
   handleNewGif(event) {
     event.preventDefault();
-    let image = {name: this.state.name, url: this.state.url,
-      description: this.state.description, userId: this.props.userStore.userId};
+    let user = {
+      _id: this.props.userStore.userId,
+      username: this.props.userStore.username
+    };
+    let image = {
+      name: this.state.name,
+      url: this.state.url,
+      description: this.state.description,
+      user: user
+    };
     this.props.imageStore.addNewImage(image);
+    this.props.imageStore.images.push(image);
     console.log("We got a new gif " +
-      this.state.name + ":" + this.state.description + ":" + this.state.url + ":" + this.props.userStore.usernameId);
-    //this.props.addNewImage(newImage);
+      this.state.name + ":" + this.state.description + ":" + this.state.url + ":" + this.props.userStore.userId);
   }
 
   render() {

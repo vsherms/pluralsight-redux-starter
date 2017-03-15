@@ -5,6 +5,7 @@ import { Button, Glyphicon } from 'react-bootstrap';
 export default class ImageStore {
   constructor(){
     extendObservable(this, {
+      allImages: [],
       images: []
     });
     this.addNewImage = this.addNewImage.bind(this);
@@ -15,7 +16,8 @@ export default class ImageStore {
   loadGifsFromServer() {
     fetch('/gifs')
        .then(result => result.json())
-       .then(images => this.images = images);
+       .then(images => this.images = images)
+       .then(images => this.allImages = images);
   }
 
   handleDelete(imgId) {
@@ -37,14 +39,9 @@ export default class ImageStore {
         name: img.name,
         url: img.url,
         description: img.description,
-        userId: img.userId
+        user: img.user
       })
     })
-    .then(result => result.json())
-    .then(image => {
-      let allImages = this.images;
-      allImages.push(image);
-      this.images = allImages;
-    });
+    .then(result => result.json());
   }
 }

@@ -12,7 +12,7 @@ class ImageComponent extends React.Component {
   }
 
   triggerSaveToLibraryRemoveFromList(e) {
-    this.props.saveToLibRemoveFromList(this.props.img);
+    this.props.saveToLibRemoveFromList(this.props.img, this.props.userStore);
   }
 
   triggerDelete(e){
@@ -21,7 +21,7 @@ class ImageComponent extends React.Component {
 
   prepareButtons(){
     let button = <div style={{width:'280px', height:'40px'}}></div>;
-    if(this.props.displaytype == 'library' && (this.props.userStore.userId == this.props.img.userId)){
+    if(this.props.displaytype == 'library' && (this.props.userStore.userId == this.props.img.user._id)){
        return (
         <Button style={{width:'280px', marginBottom: '10px'}} onClick={this.triggerDelete} type="submit"
          className="brn btn-danger" block><Glyphicon glyph="remove-circle"/>     Delete</Button>
@@ -36,6 +36,10 @@ class ImageComponent extends React.Component {
   }
 
   render() {
+    let addedBy = (
+      this.props.displaytype == 'library' && this.props.img ?
+      ("added by " + this.props.img.user.username) : "");
+
     const imageWellStyle = {maxWidth: 280, margin: '0px', padding:'0px'};
     let button = this.prepareButtons();
 
@@ -43,7 +47,7 @@ class ImageComponent extends React.Component {
       <div className="text-center col-lg-3 col-md-4 col-sm-6" key={this.props.img.name}>
         <div style={imageWellStyle}>
            <Image height="280" width="280" src={this.props.img.url} rounded/>
-           {button}
+           {addedBy} {button}
          </div>
        </div>
       );
@@ -52,7 +56,6 @@ class ImageComponent extends React.Component {
 
 ImageComponent.propTypes = {
   img: React.PropTypes.object,
-  addNewImage: React.PropTypes.func,
   addButton: React.PropTypes.bool,
   handleSubmit: React.PropTypes.func,
   deleteButton: React.PropTypes.bool,

@@ -12,7 +12,8 @@ export default class UserStore {
       admin: false,
       isLoggedIn: false,
       failedLogin: false,
-      userId: ""
+      userId: "",
+      showUserImages: false
     });
 
     this.authUser = this.authUser.bind(this);
