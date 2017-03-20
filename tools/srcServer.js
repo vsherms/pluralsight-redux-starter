@@ -134,6 +134,7 @@ app.post('/gifs',function(req, res){
   gif.url  = req.body.url;
   gif.description = req.body.description;
   gif.user = req.body.user;
+  console.log(req.body.user);
   gif.save(function(err, gif){
     if(err){
       res.send(err);

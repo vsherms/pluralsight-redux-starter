@@ -41,7 +41,7 @@ export default class ImageStore {
         name: img.name,
         url: img.url,
         description: img.description,
-        user: img.user
+        user: img.user._id
       })
     })
     .then(result => result.json());
